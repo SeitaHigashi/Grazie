@@ -14,6 +14,7 @@ namespace Grazie
             this.fullscreen = false;
 
             this.KeyDown += Form_KeyDown;
+            new Logger("test");
         }
 
         private void Form_KeyDown(object sender, KeyEventArgs e)

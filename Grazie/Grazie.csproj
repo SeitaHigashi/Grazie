@@ -64,6 +64,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Evaluation.cs" />
     <Compile Include="Grazie.cs">
       <SubType>Form</SubType>
     </Compile>
