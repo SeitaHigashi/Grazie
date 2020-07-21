@@ -54,9 +54,8 @@ namespace Grazie
                 {
                     var worksheet = workbook.Worksheet("Data");
                     var lastRow = worksheet.Column("A").LastCellUsed().WorksheetRow();
-                    if (lastRow.Cell("B").Value == Meal.Dinner.ToString())
+                    if (lastRow.Cell("B").Value.Equals(GetNowMeal().ToString()))
                     {
-
                     }
                 }
             }
@@ -73,6 +72,23 @@ namespace Grazie
             {
                 workbook.AddWorksheet("Data");
                 workbook.SaveAs(docName);
+            }
+        }
+
+        private Meal GetNowMeal()
+        {
+            int hour = DateTime.Now.Hour;
+            if(hour / 9 == 0)
+            {
+                return Meal.Morning;
+            }
+            else if(hour / 15 == 0)
+            {
+                return Meal.Lunch;
+            }
+            else
+            {
+                return Meal.Dinner;
             }
         }
 
