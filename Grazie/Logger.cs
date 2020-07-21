@@ -9,16 +9,15 @@ namespace Grazie
     class Logger
     {
         private string docName;
-        private Dictionary<Evaluation, int> evaluationBuffer;
+        private Dictionary<Evaluation, int> evaluation;
         private Timer timer;
 
         public Logger(string docName)
         {
             this.docName = docName;
 
-            evaluationBuffer = new Dictionary<Evaluation, int>();
-            evaluationBuffer = LoadEveryMealData();
-            InitEvaluation();
+            evaluation = new Dictionary<Evaluation, int>();
+            evaluation = LoadEveryMealData();
 
             timer = new System.Timers.Timer();
             timer.Interval = 10000;
@@ -32,22 +31,24 @@ namespace Grazie
 
         }
 
-        private void InitEvaluation()
-        {
-            evaluationBuffer.Clear();
-            evaluationBuffer.Add(Evaluation.SATISFACTION, 0);
-            evaluationBuffer.Add(Evaluation.GOOD, 0);
-            evaluationBuffer.Add(Evaluation.GOODLUCK, 0);
-        }
-
         public void AddEvaluation(Evaluation evaluation)
         {
-            evaluationBuffer[evaluation] += 1;
+            this.evaluation[evaluation] += 1;
+        }
+
+        private Dictionary<Evaluation, int> InitEvaluation()
+        {
+            var data = new Dictionary<Evaluation, int>();
+            data.Clear();
+            data.Add(Evaluation.SATISFACTION, 0);
+            data.Add(Evaluation.GOOD, 0);
+            data.Add(Evaluation.GOODLUCK, 0);
+            return data;
         }
 
         private Dictionary<Evaluation, int> LoadEveryMealData()
         {
-            var mealData = new Dictionary<Evaluation, int>();
+            var evaluationData = InitEvaluation();
             try
             {
                 using (XLWorkbook workbook = new XLWorkbook(docName))
@@ -55,9 +56,13 @@ namespace Grazie
                     var worksheet = workbook.Worksheet("Data");
                     var lastCell = worksheet.Column("A").LastCellUsed();
                     Console.WriteLine(lastCell.Value);
+                    var row = lastCell.WorksheetRow();
                     if (((DateTime)lastCell.Value).DayOfYear == DateTime.Now.DayOfYear &&
-                        lastCell.WorksheetRow().Cell("B").Value.Equals(GetNowMeal().ToString()))
+                        row.Cell("B").Value.Equals(GetNowMeal().ToString()))
                     {
+                        evaluationData[Evaluation.SATISFACTION] = (int)row.Cell("C").Value;
+                        evaluationData[Evaluation.GOOD] = (int)row.Cell("C").Value;
+                        evaluationData[Evaluation.GOODLUCK] = (int)row.Cell("C").Value;
                     }
                 }
             }
@@ -65,7 +70,7 @@ namespace Grazie
             {
                 CreateDataFile();
             }
-            return mealData;
+            return evaluationData;
         }
 
         private void CreateDataFile()
