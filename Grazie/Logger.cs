@@ -53,8 +53,10 @@ namespace Grazie
                 using (XLWorkbook workbook = new XLWorkbook(docName))
                 {
                     var worksheet = workbook.Worksheet("Data");
-                    var lastRow = worksheet.Column("A").LastCellUsed().WorksheetRow();
-                    if (lastRow.Cell("B").Value.Equals(GetNowMeal().ToString()))
+                    var lastCell = worksheet.Column("A").LastCellUsed();
+                    Console.WriteLine(lastCell.Value);
+                    if (((DateTime)lastCell.Value).DayOfYear == DateTime.Now.DayOfYear &&
+                        lastCell.WorksheetRow().Cell("B").Value.Equals(GetNowMeal().ToString()))
                     {
                     }
                 }
