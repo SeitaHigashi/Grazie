@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClosedXML.Excel;
+using System;
 using System.Collections.Generic;
 using System.Timers;
 
@@ -40,6 +41,16 @@ namespace Grazie
         public void AddEvaluation(Evaluation evaluation)
         {
             evaluationBuffer[evaluation] += 1;
+        }
+
+        private Dictionary<Evaluation, int> LoadEveryMealData()
+        {
+            var mealData = new Dictionary<Evaluation, int>();
+            using(XLWorkbook workbook = new XLWorkbook(docName))
+            {
+                var worksheet = workbook.Worksheet("Sheet1");
+            }
+            return mealData;
         }
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
