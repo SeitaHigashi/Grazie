@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Timers;
 
 namespace Grazie
@@ -16,6 +17,7 @@ namespace Grazie
             this.docName = docName;
 
             evaluationBuffer = new Dictionary<Evaluation, int>();
+            evaluationBuffer = LoadEveryMealData();
             InitEvaluation();
 
             timer = new System.Timers.Timer();
@@ -46,17 +48,37 @@ namespace Grazie
         private Dictionary<Evaluation, int> LoadEveryMealData()
         {
             var mealData = new Dictionary<Evaluation, int>();
-            using(XLWorkbook workbook = new XLWorkbook(docName))
+            try
             {
-                var worksheet = workbook.Worksheet("Sheet1");
+                using (XLWorkbook workbook = new XLWorkbook(docName))
+                {
+                    var worksheet = workbook.Worksheet("Data");
+                    var lastRow = worksheet.Column("A").LastCellUsed().WorksheetRow();
+                    if (lastRow.Cell("B").Value == Meal.Dinner.ToString())
+                    {
+
+                    }
+                }
+            }
+            catch(FileNotFoundException)
+            {
+                CreateDataFile();
             }
             return mealData;
+        }
+
+        private void CreateDataFile()
+        {
+            using(XLWorkbook workbook = new XLWorkbook())
+            {
+                workbook.AddWorksheet("Data");
+                workbook.SaveAs(docName);
+            }
         }
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
             Update();
-            InitEvaluation();
         }
     }
 }
