@@ -8,7 +8,7 @@ namespace Grazie
 {
     enum Meal
     {
-        Morning,
+        Breakfast,
         Lunch,
         Dinner
     }

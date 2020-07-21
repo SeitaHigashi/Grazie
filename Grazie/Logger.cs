@@ -87,7 +87,7 @@ namespace Grazie
             int hour = DateTime.Now.Hour;
             if(hour / 9 == 0)
             {
-                return Meal.Morning;
+                return Meal.Breakfast;
             }
             else if(hour / 15 == 0)
             {
