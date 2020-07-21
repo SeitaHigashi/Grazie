@@ -15,7 +15,7 @@ namespace Grazie
             this.docName = docName;
 
             evaluationBuffer = new Dictionary<Evaluation, int>();
-            InitEvaluationBuffer();
+            InitEvaluation();
 
             timer = new System.Timers.Timer();
             timer.Interval = 10000;
@@ -29,7 +29,7 @@ namespace Grazie
 
         }
 
-        private void InitEvaluationBuffer()
+        private void InitEvaluation()
         {
             evaluationBuffer.Clear();
             evaluationBuffer.Add(Evaluation.SATISFACTION, 0);
@@ -37,13 +37,15 @@ namespace Grazie
             evaluationBuffer.Add(Evaluation.GOODLUCK, 0);
         }
 
-        private void AddEvaluation(Evaluation evaluation)
+        public void AddEvaluation(Evaluation evaluation)
         {
             evaluationBuffer[evaluation] += 1;
         }
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
+            Update();
+            InitEvaluation();
         }
     }
 }

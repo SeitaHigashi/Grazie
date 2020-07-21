@@ -7,11 +7,15 @@ namespace Grazie
     {
         private Boolean fullscreen;
 
+        private Logger logger;
+
         public Grazie()
         {
             InitializeComponent();
 
             this.fullscreen = false;
+
+            logger = new Logger("log.xlsx");
 
             this.KeyDown += Form_KeyDown;
             new Logger("test");
@@ -34,6 +38,21 @@ namespace Grazie
                     fullscreen = true;
                 }
             }
+        }
+
+        private void satisfactionButton_Click(object sender, EventArgs e)
+        {
+            logger.AddEvaluation(Evaluation.SATISFACTION);
+        }
+
+        private void goodButton_Click(object sender, EventArgs e)
+        {
+            logger.AddEvaluation(Evaluation.GOOD);
+        }
+
+        private void goodluckButton_Click(object sender, EventArgs e)
+        {
+            logger.AddEvaluation(Evaluation.GOODLUCK);
         }
     }
 }

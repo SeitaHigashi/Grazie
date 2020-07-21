@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.satisfactionButton = new System.Windows.Forms.Button();
+            this.goodButton = new System.Windows.Forms.Button();
+            this.goodluckButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,9 +45,9 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.52381F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.80952F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.761906F));
-            this.tableLayoutPanel1.Controls.Add(this.button1, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button2, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.button3, 5, 1);
+            this.tableLayoutPanel1.Controls.Add(this.satisfactionButton, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.goodButton, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.goodluckButton, 5, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -58,35 +58,38 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // button1
+            // satisfactionButton
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(41, 48);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(184, 174);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "満足";
-            this.button1.UseVisualStyleBackColor = true;
+            this.satisfactionButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.satisfactionButton.Location = new System.Drawing.Point(41, 48);
+            this.satisfactionButton.Name = "satisfactionButton";
+            this.satisfactionButton.Size = new System.Drawing.Size(184, 174);
+            this.satisfactionButton.TabIndex = 0;
+            this.satisfactionButton.Text = "満足";
+            this.satisfactionButton.UseVisualStyleBackColor = true;
+            this.satisfactionButton.Click += new System.EventHandler(this.satisfactionButton_Click);
             // 
-            // button2
+            // goodButton
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Location = new System.Drawing.Point(307, 48);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(184, 174);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "普通";
-            this.button2.UseVisualStyleBackColor = true;
+            this.goodButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.goodButton.Location = new System.Drawing.Point(307, 48);
+            this.goodButton.Name = "goodButton";
+            this.goodButton.Size = new System.Drawing.Size(184, 174);
+            this.goodButton.TabIndex = 1;
+            this.goodButton.Text = "普通";
+            this.goodButton.UseVisualStyleBackColor = true;
+            this.goodButton.Click += new System.EventHandler(this.goodButton_Click);
             // 
-            // button3
+            // goodluckButton
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button3.Location = new System.Drawing.Point(573, 48);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(184, 174);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "頑張って";
-            this.button3.UseVisualStyleBackColor = true;
+            this.goodluckButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.goodluckButton.Location = new System.Drawing.Point(573, 48);
+            this.goodluckButton.Name = "goodluckButton";
+            this.goodluckButton.Size = new System.Drawing.Size(184, 174);
+            this.goodluckButton.TabIndex = 2;
+            this.goodluckButton.Text = "頑張って";
+            this.goodluckButton.UseVisualStyleBackColor = true;
+            this.goodluckButton.Click += new System.EventHandler(this.goodluckButton_Click);
             // 
             // Grazie
             // 
@@ -105,9 +108,9 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button satisfactionButton;
+        private System.Windows.Forms.Button goodButton;
+        private System.Windows.Forms.Button goodluckButton;
     }
 }
 
