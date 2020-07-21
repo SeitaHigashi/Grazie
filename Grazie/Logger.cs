@@ -84,18 +84,14 @@ namespace Grazie
 
         private Meal GetNowMeal()
         {
-            int hour = DateTime.Now.Hour;
-            if(hour / 9 == 0)
+            switch (DateTime.Now.Hour)
             {
-                return Meal.Breakfast;
-            }
-            else if(hour / 15 == 0)
-            {
-                return Meal.Lunch;
-            }
-            else
-            {
-                return Meal.Dinner;
+                case int hour when hour < 9:
+                    return Meal.Breakfast;
+                case int hour when hour < 15:
+                    return Meal.Lunch;
+                default:
+                    return Meal.Dinner;
             }
         }
 
