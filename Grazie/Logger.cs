@@ -55,7 +55,6 @@ namespace Grazie
                 {
                     var worksheet = workbook.Worksheet("Data");
                     var lastCell = worksheet.Column("A").LastCellUsed();
-                    Console.WriteLine(lastCell.Value);
                     var row = lastCell.WorksheetRow();
                     if (((DateTime)lastCell.Value).DayOfYear == DateTime.Now.DayOfYear &&
                         row.Cell("B").Value.Equals(GetNowMeal().ToString()))
@@ -77,7 +76,9 @@ namespace Grazie
         {
             using(XLWorkbook workbook = new XLWorkbook())
             {
-                workbook.AddWorksheet("Data");
+                var worksheet = workbook.AddWorksheet("Data");
+                worksheet.Cell("A1").Value = DateTime.Today;
+                worksheet.Cell("B1").Value = GetNowMeal().ToString();
                 workbook.SaveAs(docName);
             }
         }
