@@ -54,10 +54,9 @@ namespace Grazie
                 using (XLWorkbook workbook = new XLWorkbook(docName))
                 {
                     var worksheet = workbook.Worksheet("Data");
-                    var lastCell = worksheet.Column("A").LastCellUsed();
-                    var row = lastCell.WorksheetRow();
-                    if (((DateTime)lastCell.Value).DayOfYear == DateTime.Now.DayOfYear &&
-                        row.Cell("B").Value.Equals(GetNowMeal().ToString()))
+                    var row = worksheet.LastRowUsed();
+                    Console.WriteLine(row.ToString());
+                    if(IsCurrentData(row))
                     {
                         evaluationData[Evaluation.SATISFACTION] = (int)row.Cell("C").Value;
                         evaluationData[Evaluation.GOOD] = (int)row.Cell("C").Value;
@@ -70,6 +69,13 @@ namespace Grazie
                 CreateDataFile();
             }
             return evaluationData;
+        }
+
+        private Boolean IsCurrentData(IXLRow row)
+        {
+            Boolean day = (DateTime)row.Cell("A").Value == DateTime.Today;
+            Boolean meal = row.Cell("B").Value.Equals(GetNowMeal().ToString());
+            return day && meal;
         }
 
         private void CreateDataFile()
