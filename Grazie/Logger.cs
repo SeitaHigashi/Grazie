@@ -28,7 +28,7 @@ namespace Grazie
 
         public void Update()
         {
-
+            SaveEvaluation();
         }
 
         public void AddEvaluation(Evaluation evaluation)
@@ -55,20 +55,46 @@ namespace Grazie
                 {
                     var worksheet = workbook.Worksheet("Data");
                     var row = worksheet.LastRowUsed();
-                    Console.WriteLine(row.ToString());
-                    if(IsCurrentData(row))
+                    if (IsCurrentData(row))
                     {
-                        evaluationData[Evaluation.SATISFACTION] = (int)row.Cell("C").Value;
-                        evaluationData[Evaluation.GOOD] = (int)row.Cell("C").Value;
-                        evaluationData[Evaluation.GOODLUCK] = (int)row.Cell("C").Value;
+                        Console.WriteLine(row.Cell("C").Value);
+                        evaluationData[Evaluation.SATISFACTION] = (int)(double)row.Cell("C").Value;
+                        evaluationData[Evaluation.GOOD] = (int)(double)row.Cell("D").Value;
+                        evaluationData[Evaluation.GOODLUCK] = (int)(double)row.Cell("E").Value;
                     }
                 }
             }
-            catch(FileNotFoundException)
+            catch (FileNotFoundException)
             {
                 CreateDataFile();
             }
             return evaluationData;
+        }
+
+        private void SaveEvaluation()
+        {
+            try
+            {
+                using (XLWorkbook workbook = new XLWorkbook(docName))
+                {
+                    var worksheet = workbook.Worksheet("Data");
+                    var row = worksheet.LastRowUsed();
+                    if (!IsCurrentData(row))
+                    {
+                        row = row.RowBelow();
+                    }
+                    row.Cell("A").Value = DateTime.Today;
+                    row.Cell("B").Value = GetNowMeal().ToString();
+                    row.Cell("C").Value = evaluation[Evaluation.SATISFACTION];
+                    row.Cell("D").Value = evaluation[Evaluation.GOOD];
+                    row.Cell("E").Value = evaluation[Evaluation.GOODLUCK];
+                    workbook.Save();
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                CreateDataFile();
+            }
         }
 
         private Boolean IsCurrentData(IXLRow row)
@@ -80,7 +106,7 @@ namespace Grazie
 
         private void CreateDataFile()
         {
-            using(XLWorkbook workbook = new XLWorkbook())
+            using (XLWorkbook workbook = new XLWorkbook())
             {
                 var worksheet = workbook.AddWorksheet("Data");
                 worksheet.Cell("A1").Value = DateTime.Today;
