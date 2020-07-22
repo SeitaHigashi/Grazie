@@ -53,5 +53,10 @@ namespace Grazie
         {
             logger.AddEvaluation(Evaluation.GOODLUCK);
         }
+
+        private void Grazie_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            logger.Update();
+        }
     }
 }

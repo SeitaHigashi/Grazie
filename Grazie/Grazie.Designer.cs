@@ -100,6 +100,7 @@
             this.KeyPreview = true;
             this.Name = "Grazie";
             this.Text = "Grazie";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Grazie_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
