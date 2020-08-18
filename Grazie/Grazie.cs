@@ -19,10 +19,9 @@ namespace Grazie
 
             KeyDown += Form_KeyDown;
 
-            label1.Text = $"{Logger.Evaluations[Evaluation.SATISFACTION]} 人";
-            label2.Text = $"{Logger.Evaluations[Evaluation.GOOD]} 人";
-            label3.Text = $"{Logger.Evaluations[Evaluation.GOODLUCK]} 人";
-
+            NumberOfSatisfaction.Text = $"{IdeographicTallyMarks(Logger.Evaluations[Evaluation.SATISFACTION])}";
+            NumberOfGood.Text = $"{IdeographicTallyMarks(Logger.Evaluations[Evaluation.GOOD])}";
+            NumberOfGoodluck.Text = $"{IdeographicTallyMarks(Logger.Evaluations[Evaluation.GOODLUCK])}";
         }
 
         private void Form_KeyDown(object sender, KeyEventArgs e)
@@ -47,24 +46,27 @@ namespace Grazie
         private void satisfactionButton_Click(object sender, EventArgs e)
         {
             Logger.AddEvaluation(Evaluation.SATISFACTION);
-            label1.Text = $"{Logger.Evaluations[Evaluation.SATISFACTION]} 人";
+            NumberOfSatisfaction.Text = $"{IdeographicTallyMarks(Logger.Evaluations[Evaluation.SATISFACTION])}";
         }
 
         private void goodButton_Click(object sender, EventArgs e)
         {
             Logger.AddEvaluation(Evaluation.GOOD);
-            label2.Text = $"{Logger.Evaluations[Evaluation.GOOD]} 人";
+            NumberOfGood.Text = $"{IdeographicTallyMarks(Logger.Evaluations[Evaluation.GOOD])}";
         }
 
         private void goodluckButton_Click(object sender, EventArgs e)
         {
             Logger.AddEvaluation(Evaluation.GOODLUCK);
-            label3.Text = $"{Logger.Evaluations[Evaluation.GOODLUCK]} 人";
+            NumberOfGoodluck.Text = $"{IdeographicTallyMarks(Logger.Evaluations[Evaluation.GOODLUCK])}";
         }
 
         private void Grazie_FormClosing(object sender, FormClosingEventArgs e)
         {
             Logger.Update();
         }
+        public string IdeographicTallyMarks(int x) =>
+            new string('*', x / 5).Replace("*", "𝍶")
+            + new string[] { string.Empty, "𝍲", "𝍳", "𝍴", "𝍵" }[x % 5];
     }
 }
