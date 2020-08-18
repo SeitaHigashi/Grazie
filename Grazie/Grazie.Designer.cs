@@ -50,54 +50,68 @@
             this.tableLayoutPanel1.Controls.Add(this.goodluckButton, 5, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1067, 562);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // satisfactionButton
             // 
+            this.satisfactionButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(239)))), ((int)(((byte)(206)))));
             this.satisfactionButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.satisfactionButton.Location = new System.Drawing.Point(41, 48);
+            this.satisfactionButton.Font = new System.Drawing.Font("メイリオ", 28F, System.Drawing.FontStyle.Bold);
+            this.satisfactionButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(97)))), ((int)(((byte)(0)))));
+            this.satisfactionButton.Location = new System.Drawing.Point(54, 60);
+            this.satisfactionButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.satisfactionButton.Name = "satisfactionButton";
-            this.satisfactionButton.Size = new System.Drawing.Size(184, 174);
+            this.satisfactionButton.Size = new System.Drawing.Size(246, 216);
             this.satisfactionButton.TabIndex = 0;
             this.satisfactionButton.Text = "満足";
-            this.satisfactionButton.UseVisualStyleBackColor = true;
+            this.satisfactionButton.UseVisualStyleBackColor = false;
             this.satisfactionButton.Click += new System.EventHandler(this.satisfactionButton_Click);
             // 
             // goodButton
             // 
+            this.goodButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(156)))));
             this.goodButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.goodButton.Location = new System.Drawing.Point(307, 48);
+            this.goodButton.Font = new System.Drawing.Font("メイリオ", 28F, System.Drawing.FontStyle.Bold);
+            this.goodButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(156)))), ((int)(((byte)(87)))), ((int)(((byte)(0)))));
+            this.goodButton.Location = new System.Drawing.Point(409, 60);
+            this.goodButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.goodButton.Name = "goodButton";
-            this.goodButton.Size = new System.Drawing.Size(184, 174);
+            this.goodButton.Size = new System.Drawing.Size(246, 216);
             this.goodButton.TabIndex = 1;
             this.goodButton.Text = "普通";
-            this.goodButton.UseVisualStyleBackColor = true;
+            this.goodButton.UseVisualStyleBackColor = false;
             this.goodButton.Click += new System.EventHandler(this.goodButton_Click);
             // 
             // goodluckButton
             // 
+            this.goodluckButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(199)))), ((int)(((byte)(206)))));
             this.goodluckButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.goodluckButton.Location = new System.Drawing.Point(573, 48);
+            this.goodluckButton.Font = new System.Drawing.Font("メイリオ", 28F, System.Drawing.FontStyle.Bold);
+            this.goodluckButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(156)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.goodluckButton.Location = new System.Drawing.Point(764, 60);
+            this.goodluckButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.goodluckButton.Name = "goodluckButton";
-            this.goodluckButton.Size = new System.Drawing.Size(184, 174);
+            this.goodluckButton.Size = new System.Drawing.Size(246, 216);
             this.goodluckButton.TabIndex = 2;
             this.goodluckButton.Text = "頑張って";
-            this.goodluckButton.UseVisualStyleBackColor = true;
+            this.goodluckButton.UseVisualStyleBackColor = false;
             this.goodluckButton.Click += new System.EventHandler(this.goodluckButton_Click);
             // 
             // Grazie
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 562);
             this.Controls.Add(this.tableLayoutPanel1);
             this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Grazie";
             this.Text = "Grazie";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Grazie_FormClosing);
