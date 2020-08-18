@@ -18,6 +18,11 @@ namespace Grazie
             Logger = new Logger("log.xlsx");
 
             KeyDown += Form_KeyDown;
+
+            label1.Text = $"{Logger.Evaluations[Evaluation.SATISFACTION]} 人";
+            label2.Text = $"{Logger.Evaluations[Evaluation.GOOD]} 人";
+            label3.Text = $"{Logger.Evaluations[Evaluation.GOODLUCK]} 人";
+
         }
 
         private void Form_KeyDown(object sender, KeyEventArgs e)
@@ -42,16 +47,19 @@ namespace Grazie
         private void satisfactionButton_Click(object sender, EventArgs e)
         {
             Logger.AddEvaluation(Evaluation.SATISFACTION);
+            label1.Text = $"{Logger.Evaluations[Evaluation.SATISFACTION]} 人";
         }
 
         private void goodButton_Click(object sender, EventArgs e)
         {
             Logger.AddEvaluation(Evaluation.GOOD);
+            label2.Text = $"{Logger.Evaluations[Evaluation.GOOD]} 人";
         }
 
         private void goodluckButton_Click(object sender, EventArgs e)
         {
             Logger.AddEvaluation(Evaluation.GOODLUCK);
+            label3.Text = $"{Logger.Evaluations[Evaluation.GOODLUCK]} 人";
         }
 
         private void Grazie_FormClosing(object sender, FormClosingEventArgs e)
