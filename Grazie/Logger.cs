@@ -9,7 +9,7 @@ namespace Grazie
     class Logger
     {
         private string DocName { get; set; }
-        private Dictionary<Evaluation, int> Evaluations { get; set; }
+        public Dictionary<Evaluation, int> Evaluations { get; private set; }
         private Timer Timer { get; set; }
 
         public Logger(string docName)

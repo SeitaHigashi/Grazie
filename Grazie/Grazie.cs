@@ -18,6 +18,10 @@ namespace Grazie
             Logger = new Logger("log.xlsx");
 
             KeyDown += Form_KeyDown;
+
+            NumberOfSatisfaction.Text = IdeographicTallyMarks(Evaluation.SATISFACTION);
+            NumberOfGood.Text = IdeographicTallyMarks(Evaluation.GOOD);
+            NumberOfGoodluck.Text = IdeographicTallyMarks(Evaluation.GOODLUCK);
         }
 
         private void Form_KeyDown(object sender, KeyEventArgs e)
@@ -42,21 +46,28 @@ namespace Grazie
         private void satisfactionButton_Click(object sender, EventArgs e)
         {
             Logger.AddEvaluation(Evaluation.SATISFACTION);
+            NumberOfSatisfaction.Text = IdeographicTallyMarks(Evaluation.SATISFACTION);
         }
 
         private void goodButton_Click(object sender, EventArgs e)
         {
             Logger.AddEvaluation(Evaluation.GOOD);
+            NumberOfGood.Text = IdeographicTallyMarks(Evaluation.GOOD);
         }
 
         private void goodluckButton_Click(object sender, EventArgs e)
         {
             Logger.AddEvaluation(Evaluation.GOODLUCK);
+            NumberOfGoodluck.Text = IdeographicTallyMarks(Evaluation.GOODLUCK);
         }
 
         private void Grazie_FormClosing(object sender, FormClosingEventArgs e)
         {
             Logger.Update();
         }
+
+        private string IdeographicTallyMarks(Evaluation evaluation)
+             => new string('*', Logger.Evaluations[evaluation] / 5).Replace("*", "𝍶")
+            + new string[] { string.Empty, "𝍲", "𝍳", "𝍴", "𝍵" }[Logger.Evaluations[evaluation] % 5];
     }
 }
