@@ -5,58 +5,69 @@ namespace Grazie
 {
     public partial class Grazie : Form
     {
-        private Boolean fullscreen;
+        private bool Fullscreen { get; set; }
 
-        private Logger logger;
+        private Logger Logger { get; set; }
 
         public Grazie()
         {
             InitializeComponent();
 
-            this.fullscreen = false;
+            Fullscreen = false;
 
-            logger = new Logger("log.xlsx");
+            Logger = new Logger("log.xlsx");
 
-            this.KeyDown += Form_KeyDown;
+            KeyDown += Form_KeyDown;
+
+            NumberOfSatisfaction.Text = IdeographicTallyMarks(Evaluation.SATISFACTION);
+            NumberOfGood.Text = IdeographicTallyMarks(Evaluation.GOOD);
+            NumberOfGoodluck.Text = IdeographicTallyMarks(Evaluation.GOODLUCK);
         }
 
         private void Form_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyValue == 122)
             {
-                if (fullscreen)
+                if (Fullscreen)
                 {
-                    this.WindowState = FormWindowState.Normal;
-                    this.FormBorderStyle = FormBorderStyle.Sizable;
-                    fullscreen = false;
+                    WindowState = FormWindowState.Normal;
+                    FormBorderStyle = FormBorderStyle.Sizable;
+                    Fullscreen = false;
                 }
                 else
                 {
-                    this.FormBorderStyle = FormBorderStyle.None;
-                    this.WindowState = FormWindowState.Maximized;
-                    fullscreen = true;
+                    FormBorderStyle = FormBorderStyle.None;
+                    WindowState = FormWindowState.Maximized;
+                    Fullscreen = true;
                 }
             }
         }
 
         private void satisfactionButton_Click(object sender, EventArgs e)
         {
-            logger.AddEvaluation(Evaluation.SATISFACTION);
+            Logger.AddEvaluation(Evaluation.SATISFACTION);
+            NumberOfSatisfaction.Text = IdeographicTallyMarks(Evaluation.SATISFACTION);
         }
 
         private void goodButton_Click(object sender, EventArgs e)
         {
-            logger.AddEvaluation(Evaluation.GOOD);
+            Logger.AddEvaluation(Evaluation.GOOD);
+            NumberOfGood.Text = IdeographicTallyMarks(Evaluation.GOOD);
         }
 
         private void goodluckButton_Click(object sender, EventArgs e)
         {
-            logger.AddEvaluation(Evaluation.GOODLUCK);
+            Logger.AddEvaluation(Evaluation.GOODLUCK);
+            NumberOfGoodluck.Text = IdeographicTallyMarks(Evaluation.GOODLUCK);
         }
 
         private void Grazie_FormClosing(object sender, FormClosingEventArgs e)
         {
-            logger.Update();
+            Logger.Update();
         }
+
+        private string IdeographicTallyMarks(Evaluation evaluation)
+             => new string('*', Logger.Evaluations[evaluation] / 5).Replace("*", "𝍶")
+            + new string[] { string.Empty, "𝍲", "𝍳", "𝍴", "𝍵" }[Logger.Evaluations[evaluation] % 5];
     }
 }

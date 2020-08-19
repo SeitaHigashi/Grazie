@@ -8,22 +8,24 @@ namespace Grazie
 {
     class Logger
     {
-        private string docName;
-        private Dictionary<Evaluation, int> evaluation;
-        private Timer timer;
+        private string DocName { get; set; }
+        public Dictionary<Evaluation, int> Evaluations { get; private set; }
+        private Timer Timer { get; set; }
 
         public Logger(string docName)
         {
-            this.docName = docName;
+            DocName = docName;
 
-            evaluation = new Dictionary<Evaluation, int>();
-            evaluation = LoadEveryMealData();
+            Evaluations = new Dictionary<Evaluation, int>();
+            Evaluations = LoadEveryMealData();
 
-            timer = new System.Timers.Timer();
-            timer.Interval = 10000;
-            timer.Elapsed += OnTimedEvent;
-            timer.AutoReset = true;
-            timer.Enabled = true;
+            Timer = new Timer
+            {
+                Interval = 10000,
+                AutoReset = true,
+                Enabled = true,
+            };
+            Timer.Elapsed += (s, e) => Update();
         }
 
         public void Update()
@@ -31,10 +33,7 @@ namespace Grazie
             SaveEvaluation();
         }
 
-        public void AddEvaluation(Evaluation evaluation)
-        {
-            this.evaluation[evaluation] += 1;
-        }
+        public void AddEvaluation(Evaluation evaluation) => Evaluations[evaluation]++;
 
         private Dictionary<Evaluation, int> InitEvaluation()
         {
@@ -51,13 +50,12 @@ namespace Grazie
             var evaluationData = InitEvaluation();
             try
             {
-                using (XLWorkbook workbook = new XLWorkbook(docName))
+                using (XLWorkbook workbook = new XLWorkbook(DocName))
                 {
                     var worksheet = workbook.Worksheet("Data");
                     var row = worksheet.LastRowUsed();
                     if (IsCurrentData(row))
                     {
-                        Console.WriteLine(row.Cell("C").Value);
                         evaluationData[Evaluation.SATISFACTION] = (int)(double)row.Cell("C").Value;
                         evaluationData[Evaluation.GOOD] = (int)(double)row.Cell("D").Value;
                         evaluationData[Evaluation.GOODLUCK] = (int)(double)row.Cell("E").Value;
@@ -75,7 +73,7 @@ namespace Grazie
         {
             try
             {
-                using (XLWorkbook workbook = new XLWorkbook(docName))
+                using (XLWorkbook workbook = new XLWorkbook(DocName))
                 {
                     var worksheet = workbook.Worksheet("Data");
                     var row = worksheet.LastRowUsed();
@@ -85,9 +83,9 @@ namespace Grazie
                     }
                     row.Cell("A").Value = DateTime.Today;
                     row.Cell("B").Value = GetNowMeal().ToString();
-                    row.Cell("C").Value = evaluation[Evaluation.SATISFACTION];
-                    row.Cell("D").Value = evaluation[Evaluation.GOOD];
-                    row.Cell("E").Value = evaluation[Evaluation.GOODLUCK];
+                    row.Cell("C").Value = Evaluations[Evaluation.SATISFACTION];
+                    row.Cell("D").Value = Evaluations[Evaluation.GOOD];
+                    row.Cell("E").Value = Evaluations[Evaluation.GOODLUCK];
                     workbook.Save();
                 }
             }
@@ -97,10 +95,10 @@ namespace Grazie
             }
         }
 
-        private Boolean IsCurrentData(IXLRow row)
+        private bool IsCurrentData(IXLRow row)
         {
-            Boolean day = (DateTime)row.Cell("A").Value == DateTime.Today;
-            Boolean meal = row.Cell("B").Value.Equals(GetNowMeal().ToString());
+            bool day = (DateTime)row.Cell("A").Value == DateTime.Today;
+            bool meal = row.Cell("B").Value.ToString() == GetNowMeal().ToString();
             return day && meal;
         }
 
@@ -111,11 +109,11 @@ namespace Grazie
                 var worksheet = workbook.AddWorksheet("Data");
                 worksheet.Cell("A1").Value = DateTime.Today;
                 worksheet.Cell("B1").Value = GetNowMeal().ToString();
-                workbook.SaveAs(docName);
+                workbook.SaveAs(DocName);
             }
         }
 
-        private Meal GetNowMeal()
+        private static Meal GetNowMeal()
         {
             switch (DateTime.Now.Hour)
             {
@@ -126,11 +124,6 @@ namespace Grazie
                 default:
                     return Meal.Dinner;
             }
-        }
-
-        private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
-        {
-            Update();
         }
     }
 }
