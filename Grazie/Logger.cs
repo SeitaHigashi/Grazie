@@ -88,15 +88,14 @@ namespace Grazie
                 {
                     var worksheet = workbook.Worksheet("Data");
                     var row = worksheet.LastRowUsed();
-                    if (!IsCurrentData(row))
-                    {
-                        row = row.RowBelow();
-                    }
-                    row.Cell("A").Value = DateTime.Today;
-                    row.Cell("B").Value = GetNowMeal().ToString();
                     row.Cell("C").Value = Evaluations[Evaluation.SATISFACTION];
                     row.Cell("D").Value = Evaluations[Evaluation.GOOD];
                     row.Cell("E").Value = Evaluations[Evaluation.GOODLUCK];
+                    if (!IsCurrentData(row))
+                    {
+                        CreateTodayDataTemplate(workbook);
+                        Evaluations = InitEvaluation();
+                    }
                     workbook.Save();
                 }
             }
