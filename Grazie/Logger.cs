@@ -10,7 +10,6 @@ namespace Grazie
     {
         private string DocName { get; set; }
         public Dictionary<Evaluation, int> Evaluations { get; private set; }
-        private Timer Timer { get; set; }
 
         public Logger(string docName)
         {
@@ -18,14 +17,6 @@ namespace Grazie
 
             Evaluations = new Dictionary<Evaluation, int>();
             Evaluations = LoadEveryMealData();
-
-            Timer = new Timer
-            {
-                Interval = 10000,
-                AutoReset = true,
-                Enabled = true,
-            };
-            Timer.Elapsed += (s, e) => Update();
         }
 
         public void Update()
