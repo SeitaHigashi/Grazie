@@ -25,7 +25,7 @@ namespace Grazie
                 Interval = 20000,
                 Enabled = true,
             };
-            Timer.Tick += (s, e) => Update();
+            Timer.Tick += (s, e) => AllUpdate();
 
             KeyDown += Form_KeyDown;
 
@@ -76,7 +76,7 @@ namespace Grazie
             Logger.Update();
         }
 
-        private void Update()
+        private void AllUpdate()
         {
             Logger.Update();
             NumberOfSatisfaction.Text = IdeographicTallyMarks(Evaluation.SATISFACTION);
