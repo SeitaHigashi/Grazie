@@ -51,6 +51,11 @@ namespace Grazie
                         evaluationData[Evaluation.GOOD] = (int)(double)row.Cell("D").Value;
                         evaluationData[Evaluation.GOODLUCK] = (int)(double)row.Cell("E").Value;
                     }
+                    else
+                    {
+                        CreateTodayDataTemplate(workbook);
+                        workbook.Save();
+                    }
                 }
             }
             catch (FileNotFoundException)
@@ -58,6 +63,21 @@ namespace Grazie
                 CreateDataFile();
             }
             return evaluationData;
+        }
+
+        /// <summary>
+        /// シートの最下行の一行下に書き込み用テンプレートを作成します
+        /// </summary>
+        /// <param name="workbook"></param>
+        private void CreateTodayDataTemplate(XLWorkbook workbook)
+        {
+            var worksheet = workbook.Worksheet("Data");
+            var row = worksheet.LastRowUsed().RowBelow();
+            row.Cell("A").Value = DateTime.Today;
+            row.Cell("B").Value = GetNowMeal().ToString();
+            row.Cell("C").Value = 0;
+            row.Cell("D").Value = 0;
+            row.Cell("E").Value = 0;
         }
 
         private void SaveEvaluation()
