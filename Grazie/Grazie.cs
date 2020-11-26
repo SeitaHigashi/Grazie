@@ -9,6 +9,8 @@ namespace Grazie
 
         private Logger Logger { get; set; }
 
+        private Timer Timer { get; set; }
+
         public Grazie()
         {
             InitializeComponent();
@@ -16,6 +18,14 @@ namespace Grazie
             Fullscreen = false;
 
             Logger = new Logger("log.xlsx");
+
+            //Setting Timer
+            Timer = new Timer
+            {
+                Interval = 20000,
+                Enabled = true,
+            };
+            Timer.Tick += (s, e) => AllUpdate();
 
             KeyDown += Form_KeyDown;
 
@@ -64,6 +74,14 @@ namespace Grazie
         private void Grazie_FormClosing(object sender, FormClosingEventArgs e)
         {
             Logger.Update();
+        }
+
+        private void AllUpdate()
+        {
+            Logger.Update();
+            NumberOfSatisfaction.Text = IdeographicTallyMarks(Evaluation.SATISFACTION);
+            NumberOfGood.Text = IdeographicTallyMarks(Evaluation.GOOD);
+            NumberOfGoodluck.Text = IdeographicTallyMarks(Evaluation.GOODLUCK);
         }
 
         private string IdeographicTallyMarks(Evaluation evaluation)

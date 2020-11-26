@@ -10,7 +10,6 @@ namespace Grazie
     {
         private string DocName { get; set; }
         public Dictionary<Evaluation, int> Evaluations { get; private set; }
-        private Timer Timer { get; set; }
 
         public Logger(string docName)
         {
@@ -18,14 +17,6 @@ namespace Grazie
 
             Evaluations = new Dictionary<Evaluation, int>();
             Evaluations = LoadEveryMealData();
-
-            Timer = new Timer
-            {
-                Interval = 10000,
-                AutoReset = true,
-                Enabled = true,
-            };
-            Timer.Elapsed += (s, e) => Update();
         }
 
         public void Update()
@@ -60,6 +51,11 @@ namespace Grazie
                         evaluationData[Evaluation.GOOD] = (int)(double)row.Cell("D").Value;
                         evaluationData[Evaluation.GOODLUCK] = (int)(double)row.Cell("E").Value;
                     }
+                    else
+                    {
+                        CreateTodayDataTemplate(workbook);
+                        workbook.Save();
+                    }
                 }
             }
             catch (FileNotFoundException)
@@ -67,6 +63,21 @@ namespace Grazie
                 CreateDataFile();
             }
             return evaluationData;
+        }
+
+        /// <summary>
+        /// シートの最下行の一行下に書き込み用テンプレートを作成します
+        /// </summary>
+        /// <param name="workbook"></param>
+        private void CreateTodayDataTemplate(XLWorkbook workbook)
+        {
+            var worksheet = workbook.Worksheet("Data");
+            var row = worksheet.LastRowUsed().RowBelow();
+            row.Cell("A").Value = DateTime.Today;
+            row.Cell("B").Value = GetNowMeal().ToString();
+            row.Cell("C").Value = 0;
+            row.Cell("D").Value = 0;
+            row.Cell("E").Value = 0;
         }
 
         private void SaveEvaluation()
@@ -77,15 +88,14 @@ namespace Grazie
                 {
                     var worksheet = workbook.Worksheet("Data");
                     var row = worksheet.LastRowUsed();
-                    if (!IsCurrentData(row))
-                    {
-                        row = row.RowBelow();
-                    }
-                    row.Cell("A").Value = DateTime.Today;
-                    row.Cell("B").Value = GetNowMeal().ToString();
                     row.Cell("C").Value = Evaluations[Evaluation.SATISFACTION];
                     row.Cell("D").Value = Evaluations[Evaluation.GOOD];
                     row.Cell("E").Value = Evaluations[Evaluation.GOODLUCK];
+                    if (!IsCurrentData(row))
+                    {
+                        CreateTodayDataTemplate(workbook);
+                        Evaluations = InitEvaluation();
+                    }
                     workbook.Save();
                 }
             }
